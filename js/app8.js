@@ -22,10 +22,19 @@ miStorage.clear()
 
 function deleteElemento(e){
     if(e.target.classList.contains("borrar-curso")){
-        const curso = e.target.parentElement.children[1].textContent
-        miStorage.removeItem(curso)
-        e.target.parentElement.remove()
+        const curso = new Curso(e.target.parentElement.children[1].textContent, e.target.parentElement.children[2].textContent, e.target.parentElement.children[0].children[0].src)
+        const cantidad = e.target.parentElement.children[3]
+        
+        if(e.target.parentElement.children[3].textContent == 1){
+            e.target.parentElement.remove()
+            miStorage.setItem(curso.nombre, 0)
+            cantidad.textContent = miStorage.getItem(curso.nombre)
+        }else{
+        
+        miStorage.setItem(curso.nombre, parseInt(miStorage.getItem(curso.nombre)) - 1)
+        cantidad.textContent = miStorage.getItem(curso.nombre)
     }
+}
 }
 
 function addCarrito(e) {
