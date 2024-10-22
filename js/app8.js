@@ -9,18 +9,27 @@ class Curso {
 const row = document.querySelector("#lista-cursos")
 const carrito = document.querySelector("#lista-carrito tbody")
 const buttonDeleteCarrito = document.querySelector("#vaciar-carrito")
-
-console.log()
-console.log(row)
+const buttonDeleteElemento = document.querySelector("#lista-carrito tbody")
 
 row.addEventListener("click", addCarrito)
 buttonDeleteCarrito.addEventListener("click", deleteCarrito)
+buttonDeleteElemento.addEventListener("click", deleteElemento)
+
+
 
 const miStorage = window.localStorage;
 miStorage.clear()
+
+function deleteElemento(e){
+    if(e.target.classList.contains("borrar-curso")){
+        const curso = e.target.parentElement.children[1].textContent
+        miStorage.removeItem(curso)
+        e.target.parentElement.remove()
+    }
+}
+
 function addCarrito(e) {
     if(e.target.classList.contains("agregar-carrito")){
-        console.log("test")
         const newElemento = document.createElement("tr")
         
         const newNombre = document.createElement("th")
@@ -28,7 +37,9 @@ function addCarrito(e) {
         const newImagen = document.createElement("th")
         const newCantidad = document.createElement("th")
         const newImg = document.createElement("img")
+        const newBoton = document.createElement("button")
 
+        newBoton.classList.add("borrar-curso")
         const nombre = e.target.parentElement.children[0].textContent
         const precio = e.target.parentElement.children[3].children[0].textContent
         const imgSrc = e.target.parentElement.parentElement.children[0].src
@@ -49,6 +60,8 @@ function addCarrito(e) {
         newElemento.appendChild(newNombre)
         newElemento.appendChild(newPrecio)
         newElemento.appendChild(newCantidad)
+        newBoton.textContent = "X"
+        newElemento.appendChild(newBoton)
         
         carrito.appendChild(newElemento)
         }else{
